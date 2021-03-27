@@ -24,7 +24,7 @@ class CustomerSignUpView(CreateView):
     def form_valid(self, form):
         user = form.save()
         login(self.request, user)
-        return redirect('customerp')
+        return redirect('home')
 
 
 class SellerSignUpView(CreateView):
@@ -83,8 +83,10 @@ def Slogin(request):
 @login_required
 @seller_required
 def sellerV(req):
+
     obj =AddProduct
     if req.method=='POST':
+
         obj2 = AddProduct(req.POST)
         if obj2.is_valid():
             obj2.save()

@@ -1,0 +1,3 @@
+django
+pip install django-shopping-cart
+pillow

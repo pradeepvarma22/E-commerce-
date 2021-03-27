@@ -8,10 +8,12 @@ from django.conf import settings
 urlpatterns = [
 
     path('home/',Home,name='home'),
-    path('additem/<int:itemid>/', addCartV, name='additemtocart'),
-    path('cart/', cartV, name='cart'),
-    path('updateitem/<int:id>', UpdateItem, name='updateitem'),
-    path('remove/<int:id>', remove_from_cart, name='removefromcart')
+    path('cart/add/<int:id>/', cart_add, name='cart_add'),
+    path('cart/item_clear/<int:id>/', item_clear, name='item_clear'),
+    path('cart/item_increment/<int:id>/',item_increment, name='item_increment'),
+    path('cart/item_decrement/<int:id>/',item_decrement, name='item_decrement'),
+    path('cart/cart_clear/', cart_clear, name='cart_clear'),
+    path('cart/cart-detail/', cart_detail, name='cart_detail'),
 
 ]
 
