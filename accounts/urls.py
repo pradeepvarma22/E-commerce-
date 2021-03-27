@@ -1,5 +1,9 @@
 from django.urls import path,include
 from accounts.views import CustomerSignUpView,SellerSignUpView,sellerV,Clogin,Slogin,Logout,HomeF
+from django.conf.urls.static import static
+from django.conf import settings
+
+
 
 urlpatterns = [
     path('',HomeF,name='homef'),
@@ -11,3 +15,4 @@ urlpatterns = [
     path('sellerpage/',sellerV,name='sellerp'),
 ]
 
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

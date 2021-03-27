@@ -7,6 +7,8 @@ from django.shortcuts import render
 from accounts.decorators import customer_required,seller_required
 from django.contrib.auth.decorators import login_required
 from accounts.forms import AddProduct
+from accounts.models import Seller
+from ecomApp.models import Product
 
 
 def HomeF(req):
@@ -82,14 +84,75 @@ def Slogin(request):
 
 @login_required
 @seller_required
-def sellerV(req):
-
+def sellerV(request):
     obj =AddProduct
-    if req.method=='POST':
+    mainuser = request.user
+    suser = Seller.objects.get(user=mainuser)
+    if request.POST:
+        inss = Product(user=suser)
+        form = AddProduct(request.POST,request.FILES,instance=inss)
+        print(form)
+        if form.is_valid():
+            form.save()
+        else:
+            print('nooooooooooooooo')
 
-        obj2 = AddProduct(req.POST)
-        if obj2.is_valid():
-            obj2.save()
-    context={'obj_t':obj}
-    return render(req,'accounts/seller/index.html',context)
+    product_by_seller = Product.objects.filter(user=suser)
+    context={'obj_t':obj,'sproducts':product_by_seller}
 
+    return render(request,'accounts/seller/index.html',context)
+
+
+
+ #
+ #
+ #
+ # if req.method=='POST':
+ #        form = AddProduct(req.POST)
+ #        if form.is_valid():
+ #            Product = form.save(commit=False)
+ #            Product.seller=req.user
+ #            Product.save()
+ #            return redirect('sellerp')
+ #
+ #
+ #
+ #
+ #
+ #
+ # product_name = req.POST.get('name')
+ #        product_price = req.POST.get('price')
+ #        product_image = req.POST.get('image')
+ #        print('-------------------------------------------------------------------')
+ #        print(product_image)
+ #        print('----------------------------------------------------------')
+ #        product_obj = Product(seller =product_seller_obj,name=product_name,price=product_price,image=product_image)
+ #        product_obj.save()
+ #        return redirect('sellerp')
+ #
+ #
+ #
+ #
+ #
+ #
+ #
+ #
+ #
+ #
+ #
+ #
+ #
+ #    sellerobj = Seller.objects.get(user=request.user)
+ #    product_by_seller = Product.objects.filter(user=sellerobj)
+ #    if request.method=='POST':
+ #
+ #        instance = Product(user=sellerobj)
+ #
+ #        form = AddProduct(instance=instance,data=request.POST)
+ #
+ #        if form.is_valid():
+ #            print('Iiiiiiiiiiiiiiiiiiiiii    ammmmmmmmmm valid')
+ #            form.save()
+ #            return redirect('sellerp')
+ #        else:
+ #            print('pradepppppppppppppppppppppppppppppppppp')
