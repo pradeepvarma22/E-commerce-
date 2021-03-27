@@ -1,4 +1,4 @@
-from django.contrib.auth import login
+from django.contrib.auth import login,logout,authenticate
 from django.shortcuts import redirect
 from django.views.generic import CreateView
 from accounts.models import User
@@ -6,8 +6,11 @@ from accounts.form import CustomerSignUpForm,SellerSignUpForm
 from django.shortcuts import render
 from accounts.decorators import customer_required,seller_required
 from django.contrib.auth.decorators import login_required
+from accounts.forms import AddProduct
 
 
+def HomeF(req):
+    return render(req,'FirstPage.html')
 
 class CustomerSignUpView(CreateView):
     model = User
@@ -39,14 +42,52 @@ class SellerSignUpView(CreateView):
         return redirect('sellerp')
 
 
-@login_required
-@customer_required
-def customerV(req):
-    return render(req,'accounts/customer/index.html')
+def Clogin(request):
+    logout(request)
+    if request.POST:
+        username = request.POST['username']
+        password = request.POST['password']
+
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect('home')
+        else:
+            return redirect('clogin')
+
+
+    return render(request,'accounts/customer/login.html')
+
+def Logout(req):
+    logout(req)
+    return redirect('homef')
+
+def Slogin(request):
+    logout(request)
+    if request.POST:
+        username = request.POST['username']
+        password = request.POST['password']
+
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect('sellerp')
+        else:
+            return redirect(request, 'slogin')
+
+
+    return render(request,'accounts/seller/login.html')
+
 
 
 @login_required
 @seller_required
 def sellerV(req):
-    return render(req,'accounts/seller/index.html')
+    obj =AddProduct
+    if req.method=='POST':
+        obj2 = AddProduct(req.POST)
+        if obj2.is_valid():
+            obj2.save()
+    context={'obj_t':obj}
+    return render(req,'accounts/seller/index.html',context)
 

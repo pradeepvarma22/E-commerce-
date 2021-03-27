@@ -4,9 +4,9 @@
 {% block body_block %}
 
 
-<h3>Customer Login Page</h3>
+<h3>Seller Login Page</h3>
 
-<form method="post" action="{% url 'clogin' %}">
+<form method="post" action="{% url 'slogin' %}">
     {% csrf_token %}
     <div class="form-group">
     <p>
@@ -19,8 +19,7 @@
         </p>
     <button type="submit">login</button>
     </div>
+    <a href="{% url 'ssignup' %}">Seller Signup</a>
 </form>
-    <a href="{% url 'csignup' %}">Customer Signup</a>
-
 
 {% endblock %}

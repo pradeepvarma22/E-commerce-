@@ -30,3 +30,4 @@ class SellerSignUpForm(UserCreationForm):
         seller = Seller.objects.create(user=user)
         return user
 
+

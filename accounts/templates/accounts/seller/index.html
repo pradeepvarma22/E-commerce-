@@ -4,4 +4,13 @@
 
     <h1>Sellers Page</h1>
 
+    <form action="{% url 'sellerp' %}" method="POST">
+        {{obj_t.as_p}}
+        {% csrf_token %}
+        <input type="submit" value="Add Product">
+    </form>
+
+
+
+
 {% endblock %}
