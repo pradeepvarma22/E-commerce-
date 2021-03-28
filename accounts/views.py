@@ -12,7 +12,12 @@ from ecomApp.models import Product
 
 
 def HomeF(req):
-    return render(req,'FirstPage.html')
+    obj = Seller.objects.all()
+    context ={
+        'print' : obj
+    }
+
+    return render(req,'FirstPage.html',context)
 
 class CustomerSignUpView(CreateView):
     model = User

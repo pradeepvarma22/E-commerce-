@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+
+{% block body_block %}
+
+
+
+
+
+<div class="container" style='padding-top:3em'>
+    {% for message in messages %}
+        <div class='alert alert-{{message.tags}}'>{{message}}</div>
+    {% endfor %}
+    <div class="row">
+        <div class="col-md-12">
+            <div style='padding:50px; text-align: center;'>
+                <h2 style='font-weight: bold;'>Order Com</h2>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel panel-info">
+                <div>
+                    {% for prod in request.session.cart.values %}
+                    {% if forloop.first %}
+                    <table class='table' style='background-color: whitesmoke;'>
+                        <thead class='thead-dark'>
+                            <tr>
+                                <th scope="col" width=200 style='text-align: center;'>Product Name</th>
+                                <th scope="col" width=100 style='text-align: center;'>Unit Price</th>
+                                <th scope="col" width=100 style='text-align: center;'>Quantity</th>
+                                <th scope="col" width=100 style='text-align: center;'>subtotal</th>
+                            </tr>
+                        </thead>
+
+                    {% endif %}
+                    <tbody>
+                        <tr>
+                            <td style='text-align: center;'>{{prod.name}}</td>
+                            <td style='text-align: center;'>{{prod.price|floatformat}}</td>
+                            <td style='text-align: center;'>{{prod.quantity}}</td>
+                            <td style='text-align: center;'>{% widthratio prod.price 1 prod.quantity %}</td>
+                        </tr>
+                    </tbody>
+                    {% if forloop.last %}
+                    </table>
+                    <div style='padding:12px 12px 12px 0;'>
+                        <h3 style='font-weight: bold;'>Total: {{total_price|floatformat}} </h3>
+                    </div>
+                    {% endif %}
+                    {% empty %}
+                    <div style='padding:12px 12px 12px 0; text-align: center;'>
+                        <h3 style='font-weight: bold;'>Order <a href="/" style='font-weight: bold; color:lightblue'>PPPPP</a></h3>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+                <div style='padding:12px 12px 12px 0'>
+                    <form action="." method='POST'>
+                        {% csrf_token %}
+                        <table>
+                            {{form.as_table}}
+                        </table>
+                        <div style='padding:12px 12px 12px 0'>
+                            <button class='btn btn-danger' type="submit">_Order_</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

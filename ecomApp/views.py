@@ -5,6 +5,7 @@ from accounts.decorators import customer_required,seller_required
 from django.contrib.auth.decorators import login_required
 from cart.cart import Cart
 
+from ecomApp.forms import OrderForm
 
 
 @login_required
@@ -19,6 +20,13 @@ def Home(request, itemname='all'):
     }
 
     return render(request, 'ecomApp/home.html', context)
+
+
+def page_view(request,id):
+    obj = Product.objects.get(id=id)
+    context = {'product':obj}
+    return render(request,'ecomApp/product_page_view.html',context)
+
 
 @login_required
 @customer_required
@@ -75,3 +83,30 @@ def cart_detail(request):
 
     return render(request, 'ecomApp/cart.html',context)
 
+
+def order(request):
+    cart = Cart(request)
+    dic = list(cart.session['cart'].values())
+    total_price = sum([each['quantity'] * (float(each['price'])) for each in dic])
+
+    if request.method == 'POST':
+        mainuser = request.user
+        customeruu = Customer.objects.get(user=mainuser)
+        user = customeruu
+        new_order = Checkout(user=user)
+        form = OrderForm(request.POST, instance=new_order)
+        if form.is_valid():
+            order = form.save()
+            print(cart.session['cart'].values())
+
+            for prod in cart.session['cart'].values():
+                OrderItem.objects.create(order=order,name=prod['name'],price=str(prod['price']),quantity=prod['quantity'])
+
+            cart.clear()
+            return redirect('home')
+
+    form = OrderForm()
+    context = {'form':form,
+               'total_price':total_price
+               }
+    return render(request, 'ecomApp/order.html',context)

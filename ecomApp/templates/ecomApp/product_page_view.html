@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+
+{% block body_block %}
+
+
+
+
+        <div class="card" style="width: 18rem;">
+            <a href=""><img class="card-img-top" src="/images/{{product.image}}" alt="Cool"></a>
+            <div class="card-body">
+              <h5 class="card-title">{{product.name}}</h5>
+              <p class="card-text"><b>Rs:  {{product.price}}</b></p>
+              <a href="{% url 'cart_add' product.id %}" class="btn btn-primary">Add To Cart</a>
+            </div>
+          </div>
+
+
+
+
+
+
+{% endblock %}

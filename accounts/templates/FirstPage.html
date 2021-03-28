@@ -7,4 +7,17 @@
 
 <a href="{% url 'slogin' %}">Seller Login</a>
 
+
+
+<h1>Sellers List</h1>
+
+    {% for i in print %}
+
+        <p> {{i.user.username}}</p>
+
+        <br>
+
+    {% endfor %}
+
+
 {% endblock %}
