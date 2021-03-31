@@ -1,19 +1,89 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block body_block %}
+<!DOCTYPE html>
+<html>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+body {font-family: Arial, Helvetica, sans-serif;}
+
+.navbar {
+  width: 100%;
+  background-color: #555;
+  overflow: auto;
+  
+}
+@media screen(max-width: 486px) {
+.navbar {
+  display: flex;
+  flex-direction: column;
+  }
+  }
+
+.navbar a {
+  float: left;
+  padding: 40px;
+  color: white;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.navbar a:hover {
+  background-color: #000;
+}
+
+.active {
+  background-color: #4CAF50;
+}
+
+.login {
+float: right !important; 
+}
+
+@media screen and (max-width: 500px) {
+  .navbar a {
+    float: none;
+    display: block;
+  }
+}
+<script type="text/javascript">
+function image(img) {
+    var src = img.src;
+    window.open(src);
+}
+table, td{
+    display: table;
+  border-collapse: separate;
+  border-spacing: 2px;
+}
+</style>
+<body>
+<div class="navbar">
+<img src="{% static 'leaf.jpg' %}" height="100px" width="100px" align="left" onclick="image(this)">
+  <a class="active" href="#"><i class="fa fa-fw fa-home"></i> Home</a> 
+  <a href="#"><i class="fa fa-fw fa-search"></i> Search</a> 
+  <a href="#"><i class="fa fa-fw fa-envelope"></i> Contact</a> 
+  <a class="login" href="#"><i class="fa fa-fw fa-user "></i> Login</a>
+</div>
+
+</body>
+</html> 
 
 
-<a href="{% url 'clogin' %}" > Customer Login</a>
+<a href="{% url 'clogin' %}" type="button" class="btn btn-primary"> Customer Login</a>
 
 <a href="{% url 'slogin' %}">Seller Login</a>
 
 
 
 <h1>Sellers List</h1>
-
+    
     {% for i in print %}
+    <table>
+        <td>{{i.user.username}}</td>
+    </table>
 
-        <p> {{i.user.username}}</p>
 
         <br>
 
