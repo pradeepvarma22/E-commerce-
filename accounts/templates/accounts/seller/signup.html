@@ -220,10 +220,6 @@
             }
             </style>
             <body>
-            <button onclick="document.getElementById('id01').style.display='block'" style="width:auto;">Sign Up</button>
-            
-            <div id="id01" class="modal">
-              <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
               <form class="modal-content" action="{% url 'ssignup' %}"method="POST">
                 <div class="container">
                   <h1> Seller Sign Up</h1>
@@ -251,18 +247,6 @@
                 </div>
               </form>
             </div>
-            
-            <script>
-            // Get the modal
-            var modal = document.getElementById('id01');
-            
-            // When the user clicks anywhere outside of the modal, close it
-            window.onclick = function(event) {
-              if (event.target == modal) {
-                modal.style.display = "none";
-              }
-            }
-            </script>
     
 
 {% endblock %} 
