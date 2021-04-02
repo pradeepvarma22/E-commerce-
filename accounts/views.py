@@ -48,7 +48,6 @@ class SellerSignUpView(CreateView):
         login(self.request, user)
         return redirect('sellerp')
 
-
 def Clogin(request):
     logout(request)
     if request.POST:
@@ -84,8 +83,6 @@ def Slogin(request):
 
 
     return render(request,'accounts/seller/login.html')
-
-
 
 @login_required
 @seller_required
