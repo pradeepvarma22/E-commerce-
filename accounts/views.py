@@ -1,6 +1,7 @@
 from django.contrib.auth import login,logout,authenticate
 from django.shortcuts import redirect
 from django.views.generic import CreateView
+from django.views.generic.edit import FormView
 from accounts.models import User
 from accounts.form import CustomerSignUpForm,SellerSignUpForm
 from django.shortcuts import render
@@ -9,6 +10,8 @@ from django.contrib.auth.decorators import login_required
 from accounts.forms import AddProduct
 from accounts.models import Seller
 from ecomApp.models import Product
+from django.urls import reverse_lazy
+
 
 
 def HomeF(req):
@@ -34,19 +37,27 @@ class CustomerSignUpView(CreateView):
         return redirect('home')
 
 
-class SellerSignUpView(CreateView):
+class SellerSignUpView(FormView):
     model = User
     form_class = SellerSignUpForm
     template_name = 'accounts/seller/signup.html'
-
+    success_url = reverse_lazy('sellerp')
+    
     def get_context_data(self, **kwargs):
         kwargs['user_type'] = 'seller'
         return super().get_context_data(**kwargs)
 
     def form_valid(self, form):
         user = form.save()
-        login(self.request, user)
-        return redirect('sellerp')
+        if user is not None:
+            login(self.request, user)
+            return redirect('sellerp')
+        else:
+            return self.form_invalid(form)
+    
+    def form_invalid(self,form):
+        form.add_error(None,"Password and userName should not same")
+        return super(FormView,self).form_invalid(form)
 
 
 def Clogin(request):
