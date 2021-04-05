@@ -59,7 +59,6 @@ class SellerSignUpView(FormView):
         form.add_error(None,"Password and userName should not same")
         return super(FormView,self).form_invalid(form)
 
-
 def Clogin(request):
     logout(request)
     if request.POST:
@@ -95,8 +94,6 @@ def Slogin(request):
 
 
     return render(request,'accounts/seller/login.html')
-
-
 
 @login_required
 @seller_required
