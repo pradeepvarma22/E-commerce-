@@ -128,7 +128,8 @@ span.psw {
   animation: animatezoom 0.6s
 }
 .login1{
-  padding: 15px 32px;  
+  padding: 10px 24px; !important
+
 }
 @-webkit-keyframes animatezoom {
   from {-webkit-transform: scale(0)} 
@@ -156,30 +157,25 @@ span.psw {
     display: block;
   }
 }
-<script type="text/javascript">
-function image(img) {
-    var src = img.src;
-    window.open(src);
-}
-</script>
 table, td{
     display: table;
   border-collapse: separate;
   border-spacing: 2px;
 }
-<script>
-var box =0;
-var customer = document.getElementById("customer");
-var seller = document.getElementById("seller");
-
-customer.onclick = function(){
-    box=1;
-}
-
-seller.onclick = function(){
-  box=0;
-}
 </style>
+<script>
+  function SubmitForm()
+{
+     document.forms['login'].action='clogin';
+     document.forms['login'].target='frame_result1';
+     document.forms['login'].submit();
+
+     document.forms['login'].action='slogin';
+     document.forms['login'].target='frame_result2';
+     document.forms['login'].submit();
+     return true;
+}
+  </script>
 <body>
 <div class="navbar">
 <img src="{% static 'images/leaf.png' %}" height="100px" width="100px" align="left" onclick="image(this)">
@@ -188,12 +184,9 @@ seller.onclick = function(){
   <a href="#"role="button" aria-pressed="true"><i class="fa fa-fw fa-envelope"></i> Contact</a> 
 <a button onclick="document.getElementById('id01').style.display='block'" style="width:auto;" aria-pressed="true"><i class="fa fa-fw fa-user "></i> Login</a></button></a>
 <div id="id01" class="modal">
-  {% if box %}
+  
   <form class="modal-content animate" action="{%url 'clogin' %}" method="post">
-{% else %}
-  <form class="modal-content animate" action="{%url 'slogin' %}" method="post">
-{% endif %}
-  <div class="login1">
+ <div id="login1">
   <a id="customer"  type="button" class="btn btn-primary">customer login</a>
   <a id="seller"  type="button" class="btn btn-primary">seller login</a>
   </div>
@@ -217,7 +210,7 @@ seller.onclick = function(){
 
     <div class="container" style="background-color:#f1f1f1">
       <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
-      <span class="psw">Forgot <a href="#">password?</a></span>
+      <span class="psw"> <a href="#">Forgot password?</a></span>
     </div>
   </form>
 </div>
