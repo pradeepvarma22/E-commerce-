@@ -64,7 +64,7 @@ def Clogin(request):
     if request.POST:
         username = request.POST['username']
         password = request.POST['password']
-
+        print(username)
         user = authenticate(username=username, password=password)
         if user is not None:
             login(request, user)
@@ -82,8 +82,8 @@ def Logout(req):
 def Slogin(request):
     logout(request)
     if request.POST:
-        username = request.POST['username']
-        password = request.POST['password']
+        username = request.POST.get('username')
+        password = request.POST.get('password')
 
         user = authenticate(username=username, password=password)
         if user is not None:
