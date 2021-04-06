@@ -172,10 +172,10 @@ table, td{
 <a button onclick="document.getElementById('id01').style.display='block'" style="width:auto;" aria-pressed="true"><i class="fa fa-fw fa-user "></i> Login</a></button></a>
 <div id="id01" class="modal">
   
-  <form class="modal-content animate" method="post">
+  <form class="modal-content animate" name = "shiva" method="post">
  <div id="login1">
-  <a id="customer"  type="button" class="btn btn-primary" onclick="clogin()">customer login</a>
-  <a id="seller"  type="button" class="btn btn-primary" onclick="slogin()">seller login</a>
+  <a id="customer"  type="button" class="btn btn-primary" onclick="return clogin();">customer login</a>
+  <a id="seller"  type="button" class="btn btn-primary" onclick="return slogin();">seller login</a>
   </div>
     <div class="imgcontainer">
       <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
@@ -184,12 +184,12 @@ table, td{
     <div class="container">
       {% csrf_token %}
       <label for="uname"><b>Username</b></label>
-      <input type="text" placeholder="Enter Username" name="uname" required>
+      <input type="text" placeholder="Enter Username" name="username" required>
 
       <label for="psw"><b>Password</b></label>
-      <input type="password" placeholder="Enter Password" name="psw" required>
+      <input type="password" placeholder="Enter Password" name="password" required>
         
-      <button type="submit">Login</button>
+      <button type="submit" onclick="return clogin();">Login</button>
       <label>
         <input type="checkbox" checked="checked" name="remember"> Remember me
       </label>
@@ -211,15 +211,13 @@ window.onclick = function(event) {
         modal.style.display = "none";
     }
 }
-</script>
-<script>
-  function clogin()
+function clogin()
 {
-  
-     document.forms.action='clogin';
+     document.shiva.action="{% url 'clogin' %}";
 }
-function slogin(){
-     document.forms.action='slogin';
+function slogin()
+{
+     document.shiva.action="{% url 'slogin' %}";
 }
 </script>
 </div>

@@ -62,8 +62,8 @@ class SellerSignUpView(FormView):
 def Clogin(request):
     logout(request)
     if request.POST:
-        username = request.POST['username']
-        password = request.POST['password']
+        username = request.POST.get('username')
+        password = request.POST.get('password')
         print(username)
         user = authenticate(username=username, password=password)
         if user is not None:
@@ -90,7 +90,7 @@ def Slogin(request):
             login(request, user)
             return redirect('sellerp')
         else:
-            return redirect(request, 'slogin')
+            return redirect('slogin')
 
 
     return render(request,'accounts/seller/login.html')
