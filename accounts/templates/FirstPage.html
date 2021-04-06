@@ -163,19 +163,6 @@ table, td{
   border-spacing: 2px;
 }
 </style>
-<script>
-  function SubmitForm()
-{
-     document.forms['login'].action='clogin';
-     document.forms['login'].target='frame_result1';
-     document.forms['login'].submit();
-
-     document.forms['login'].action='slogin';
-     document.forms['login'].target='frame_result2';
-     document.forms['login'].submit();
-     return true;
-}
-  </script>
 <body>
 <div class="navbar">
 <img src="{% static 'images/leaf.png' %}" height="100px" width="100px" align="left" onclick="image(this)">
@@ -185,10 +172,10 @@ table, td{
 <a button onclick="document.getElementById('id01').style.display='block'" style="width:auto;" aria-pressed="true"><i class="fa fa-fw fa-user "></i> Login</a></button></a>
 <div id="id01" class="modal">
   
-  <form class="modal-content animate" action="{%url 'clogin' %}" method="post">
+  <form class="modal-content animate" name = "shiva" method="post">
  <div id="login1">
-  <a id="customer"  type="button" class="btn btn-primary">customer login</a>
-  <a id="seller"  type="button" class="btn btn-primary">seller login</a>
+  <a id="customer"  type="button" class="btn btn-primary" onclick="return clogin();">customer login</a>
+  <a id="seller"  type="button" class="btn btn-primary" onclick="return slogin();">seller login</a>
   </div>
     <div class="imgcontainer">
       <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
@@ -197,12 +184,12 @@ table, td{
     <div class="container">
       {% csrf_token %}
       <label for="uname"><b>Username</b></label>
-      <input type="text" placeholder="Enter Username" name="uname" required>
+      <input type="text" placeholder="Enter Username" name="username" required>
 
       <label for="psw"><b>Password</b></label>
-      <input type="password" placeholder="Enter Password" name="psw" required>
+      <input type="password" placeholder="Enter Password" name="password" required>
         
-      <button type="submit">Login</button>
+      <button type="submit" onclick="return clogin();">Login</button>
       <label>
         <input type="checkbox" checked="checked" name="remember"> Remember me
       </label>
@@ -224,12 +211,21 @@ window.onclick = function(event) {
         modal.style.display = "none";
     }
 }
+function clogin()
+{
+     document.shiva.action="{% url 'clogin' %}";
+}
+function slogin()
+{
+     document.shiva.action="{% url 'slogin' %}";
+}
 </script>
 </div>
 </body>
 </html> 
 
-
+<a href="{% url 'clogin' %}">Customer Login</a>
+<a href="{% url 'slogin' %}">Seller lognin</a>
 <a href="{% url 'ssignup' %}" type="button" >Seller signup</a>
 <a href="{% url 'csignup' %}" type="button" >customer signup</a>
 
