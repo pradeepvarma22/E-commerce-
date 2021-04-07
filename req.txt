@@ -1,3 +1,4 @@
 django
-pip install django-shopping-cart
+django-shopping-cart
 pillow
+pandas==1.0.4
