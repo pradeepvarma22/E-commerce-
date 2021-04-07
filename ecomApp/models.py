@@ -43,4 +43,15 @@ class OrderItem(models.Model):
         return str(self.id)
 
 
-
+class MyRating(models.Model):
+    MY_CHOICES = (
+        ('1', '1'),
+        ('2', '2'),
+        ('3', '3'),
+        ('4', '4'),
+        ('5','5'),
+    )
+    user = models.ForeignKey(Customer,on_delete=models.CASCADE)
+    product = models.ForeignKey(Product,on_delete=models.CASCADE)
+    rating  = models.CharField(default=0,max_length=1, choices=MY_CHOICES)
+    

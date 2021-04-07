@@ -1,8 +1,12 @@
 from django import forms
-from ecomApp.models import Checkout
+from ecomApp.models import Checkout,MyRating
 
 
 
+class RatingForm(forms.ModelForm):
+    class Meta:
+        model = MyRating
+        fields=('rating',)
 
 class OrderForm(forms.ModelForm):
     class Meta:

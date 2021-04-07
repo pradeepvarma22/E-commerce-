@@ -5,7 +5,7 @@ from accounts.decorators import customer_required,seller_required
 from django.contrib.auth.decorators import login_required
 from cart.cart import Cart
 
-from ecomApp.forms import OrderForm
+from ecomApp.forms import OrderForm,RatingForm
 
 
 @login_required
@@ -23,8 +23,36 @@ def Home(request, itemname='all'):
 
 
 def page_view(request,id):
+    mainuser = request.user
+    customeruu = Customer.objects.get(user=mainuser)
+    user = customeruu
+    if request.method=='POST':
+        
+        form = RatingForm(request.POST)
+        if form.is_valid():
+            new_obj = form.save(commit=False)
+            new_obj.user = user
+            new_obj.product=Product.objects.get(id=id)
+            new_obj.save()
+
+            
     obj = Product.objects.get(id=id)
-    context = {'product':obj}
+    Flagg = False
+    valuee=0
+    try:
+        check_already_reviewd=MyRating.objects.get(user =user)
+        check_already_reviewd_pro= MyRating.objects.get(product=obj)
+    except:
+        check_already_reviewd = 0
+        check_already_reviewd_pro=0
+
+        
+    if check_already_reviewd and check_already_reviewd_pro:
+        Flagg = True
+        valuee = check_already_reviewd.rating
+
+    ratingform = RatingForm
+    context = {'product':obj,'ratingform':ratingform,'rateduser':Flagg,'rating':valuee}
     return render(request,'ecomApp/product_page_view.html',context)
 
 

@@ -2,21 +2,99 @@
 
 
 {% block body_block %}
+<style>
+ 
+ .column {
+  float: left;
+  width: 29.33%;
+  padding: 10px;
+  height: 300px; /* Should be removed. Only for demonstration */
+}
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+body{
+  		background: #FDFDFD;
+			font-family: "Segoe WP","Segoe UI", Helvetica, Arial, sans-serif;
+			text-align:left;
+		}
+	
+	
+		.rating {
+			width: 226px;
+			margin: 0 auto 1em;
+			font-size: 45px;
+			overflow:hidden;
+		}
+	.rating input {
+		float: right;
+		opacity: 0;
+		position: absolute;
+	}
+		.rating a,
+    .rating label {
+			float:right;
+			color: #aaa;
+			text-decoration: none;
+			-webkit-transition: color .4s;
+			-moz-transition: color .4s;
+			-o-transition: color .4s;
+			transition: color .4s;
+		}
+.rating label:hover ~ label,
+.rating input:focus ~ label,
+.rating label:hover,
+		.rating a:hover,
+		.rating a:hover ~ a,
+		.rating a:focus,
+		.rating a:focus ~ a		{
+			color: orange;
+			cursor: pointer;
+		}
+		
+ 
+</style>
 
 
 
+<div class="row">
+    <div class="column">
+      <img src="/images/{{product.image}}" alt="Cool" width="300" height="400">
+    </div>
+    <br>
+    <div class="column">
+      <br>
+      <br>
+      <p>{{product.name}}</p>
+      
+      Rs : {{product.price}}
+      <br>
+      <br>
+      <a href="{% url 'cart_add' product.id %}" class="btn btn-primary">Add To Cart</a>
+    </div>
+    <div class="column">
+      {% if rateduser %}
 
-        <div class="card" style="width: 18rem;">
-            <a href=""><img class="card-img-top" src="/images/{{product.image}}" alt="Cool"></a>
-            <div class="card-body">
-              <h5 class="card-title">{{product.name}}</h5>
-              <p class="card-text"><b>Rs:  {{product.price}}</b></p>
-              <a href="{% url 'cart_add' product.id %}" class="btn btn-primary">Add To Cart</a>
-            </div>
-          </div>
+          Product Rating : {{rating}}
+
+      {% else %}
+        <h3><p>Rating</p></h3>
+        <form action="{% url 'page_view' product.id  %}" method="POST">
+          {% csrf_token %}
+
+          {{ratingform}}
+          <br>
+          <br>
+        <input type="submit" value="Rating">
+      </form>
+
+    {% endif %}
+    </div>
 
 
-
+</div>
 
 
 

@@ -84,7 +84,7 @@ def Slogin(request):
     if request.POST:
         username = request.POST.get('username')
         password = request.POST.get('password')
-
+        
         user = authenticate(username=username, password=password)
         if user is not None:
             login(request, user)
