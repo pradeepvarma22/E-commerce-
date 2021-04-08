@@ -1,3 +1,6 @@
-django
-pip install django-shopping-cart
-pillow
+Django==3.1.7
+django-shopping-cart==0.1
+Pillow==8.1.2
+pandas==1.0.4
+numpy==1.20.1
+

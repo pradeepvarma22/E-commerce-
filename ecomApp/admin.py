@@ -5,5 +5,6 @@ from ecomApp.models import *
 admin.site.register(Product)
 admin.site.register(Checkout)
 admin.site.register(OrderItem)
+admin.site.register(MyRating)
 
 
