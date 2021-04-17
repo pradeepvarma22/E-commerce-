@@ -2,13 +2,31 @@
 
 
 {% block body_block %}
+{% include "navbar.html" %}
 <style>
  
  .column {
   float: left;
   width: 29.33%;
   padding: 10px;
-  height: 300px; /* Should be removed. Only for demonstration */
+  /* height: 300px;  Should be removed. Only for demonstration */
+}
+
+.row {
+  padding: 20PX;
+  display: flex;
+  flex-direction: column;
+}
+
+.cart-and-rating {
+  width:100px;
+}
+
+.add-cart {
+  width:130px;
+}
+.description {
+  padding: 10px 0 0 20px;
 }
 .row:after {
   content: "";
@@ -60,42 +78,48 @@ body{
 
 
 <div class="row">
+  <h2>{{product.name}}</h2>
+  <div style="display:flex">
+
     <div class="column">
-      <img src="/images/{{product.image}}" alt="Cool" width="300" height="400">
+      <img src="/images/{{product.image}}" alt="Cool" width="400" height="400">
+      <br>
     </div>
-    <br>
-    <div class="column">
-      <br>
-      <br>
-      <p>{{product.name}}</p>
-      
-      Rs : {{product.price}}
-      <br>
-      <br>
-      <a href="{% url 'cart_add' product.id %}" class="btn btn-primary">Add To Cart</a>
+    <div class="description">
+      <p>{{product.description}}</p>
     </div>
-    <div class="column">
-      {% if rateduser %}
+  </div>
+      <div class="cart-and-rating">
+        Rs : {{product.price}}
+        <button href="{% url 'cart_add' product.id %}" class="add-cart btn btn-primary">Add To Cart</button>
+      </div>
+      <br>
+      <div class="cart-and-rating">
+        {% if rateduser %}
 
           Product Rating : {{rating}}
 
       {% else %}
-        <h3><p>Rating</p></h3>
+      <div>
+
+        <h3>Rating</h3>
         <form action="{% url 'page_view' product.id  %}" method="POST">
-          {% csrf_token %}
-
-          {{ratingform}}
+          <div style="display:flex">
+            {% csrf_token %}
+            {{ratingform}}
+          </div>
           <br>
-          <br>
-        <input type="submit" value="Rating">
-      </form>
+          <input type="submit" value="Rating">
+        </form>
+      </div>
+        
+        {% endif %}
+      </div>
 
-    {% endif %}
+      
+   
     </div>
-
-
-</div>
-
-
-
-{% endblock %}
+    
+    
+    
+    {% endblock %}

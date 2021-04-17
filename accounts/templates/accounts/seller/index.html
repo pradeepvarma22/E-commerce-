@@ -9,7 +9,7 @@
 
         {% csrf_token %}
             {{obj_t.as_p}}
-
+        
 
         <input type="submit" value="Add Product">
     </form>
@@ -25,7 +25,7 @@
             <div class="card-body">
               <h5 class="card-title">{{i.name}}</h5>
               <p class="card-text"><b>Rs:  {{i.price}}</b></p>
-              <a href="{% url 'cart_add' i.id %}" class="btn btn-primary">Add To Cart</a>
+              <p class="card-text"><b>{{i.description}}</b></p>
             </div>
           </div>
           <br>

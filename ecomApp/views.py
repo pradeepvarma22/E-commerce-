@@ -175,7 +175,7 @@ def recommend(request):
 
 	# if new user not rated any Product
     if current_user_id>new_user:
-        product=Product.objects.get(id=25)      #Any object
+        product=Product.objects.first()   #Any object
         q=MyRating(user=customeruu,product=product,rating=1)
         q.save()
 
