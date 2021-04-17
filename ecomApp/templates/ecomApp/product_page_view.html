@@ -1,125 +1,95 @@
 {% extends 'base.html' %}
-
-
+{% load crispy_forms_tags %}
 {% block body_block %}
-{% include "navbar.html" %}
-<style>
- 
- .column {
-  float: left;
-  width: 29.33%;
-  padding: 10px;
-  /* height: 300px;  Should be removed. Only for demonstration */
-}
 
-.row {
-  padding: 20PX;
-  display: flex;
-  flex-direction: column;
-}
+<a href="{% url 'cart_detail' %}">
+  <p style="text-align:center;">Cart (   {{request.session.cart|length}} ) </p>
+</a>
+  <main class="mt-5 pt-4">
+    <div class="container dark-grey-text mt-5">
 
-.cart-and-rating {
-  width:100px;
-}
+      <!--Grid row-->
+      <div class="row wow fadeIn">
 
-.add-cart {
-  width:130px;
-}
-.description {
-  padding: 10px 0 0 20px;
-}
-.row:after {
-  content: "";
-  display: table;
-  clear: both;
-}
-body{
-  		background: #FDFDFD;
-			font-family: "Segoe WP","Segoe UI", Helvetica, Arial, sans-serif;
-			text-align:left;
-		}
-	
-	
-		.rating {
-			width: 226px;
-			margin: 0 auto 1em;
-			font-size: 45px;
-			overflow:hidden;
-		}
-	.rating input {
-		float: right;
-		opacity: 0;
-		position: absolute;
-	}
-		.rating a,
-    .rating label {
-			float:right;
-			color: #aaa;
-			text-decoration: none;
-			-webkit-transition: color .4s;
-			-moz-transition: color .4s;
-			-o-transition: color .4s;
-			transition: color .4s;
-		}
-.rating label:hover ~ label,
-.rating input:focus ~ label,
-.rating label:hover,
-		.rating a:hover,
-		.rating a:hover ~ a,
-		.rating a:focus,
-		.rating a:focus ~ a		{
-			color: orange;
-			cursor: pointer;
-		}
-		
- 
-</style>
+        <!--Grid column-->
+        <div class="col-md-6 mb-4">
 
+          <img src="/images/{{product.image}}" class="img-fluid" alt="">
 
+        </div>
 
-<div class="row">
-  <h2>{{product.name}}</h2>
-  <div style="display:flex">
-
-    <div class="column">
-      <img src="/images/{{product.image}}" alt="Cool" width="400" height="400">
-      <br>
-    </div>
-    <div class="description">
-      <p>{{product.description}}</p>
-    </div>
-  </div>
-      <div class="cart-and-rating">
-        Rs : {{product.price}}
-        <button href="{% url 'cart_add' product.id %}" class="add-cart btn btn-primary">Add To Cart</button>
-      </div>
-      <br>
-      <div class="cart-and-rating">
-        {% if rateduser %}
-
-          Product Rating : {{rating}}
-
-      {% else %}
-      <div>
-
-        <h3>Rating</h3>
-        <form action="{% url 'page_view' product.id  %}" method="POST">
-          <div style="display:flex">
-            {% csrf_token %}
-            {{ratingform}}
-          </div>
-          <br>
-          <input type="submit" value="Rating">
-        </form>
-      </div>
         
-        {% endif %}
+
+        <div class="col-md-6 mb-4">
+
+          <!--Content-->
+          <div class="p-4">
+
+
+            
+
+            <p class="lead">
+              <h3><p><span>{{product.name}}</span></p></h3>
+              <span>₹ {{ product.price }}</span>
+            </p>
+
+            <p class="lead font-weight-bold">Description: </p>
+            <p>{{product.description}}</p>
+            
+            {% comment %} <form class="d-flex justify-content-left">
+              <!-- Default input -->
+              <input type="number" value="1" aria-label="Search" class="form-control" style="width: 100px">
+              <button class="btn btn-primary btn-md my-0 p" type="submit">
+                Add to cart
+                <i class="fas fa-shopping-cart ml-1"></i>
+              </button>
+
+            </form> {% endcomment %}
+            <a href="{% url 'cart_add' product.id %}" class="btn btn-primary btn-md my-0 p">
+              Add to cart
+              <i class="fas fa-shopping-cart ml-1"></i>
+            </a>
+            <a href="{% url 'item_clear' product.id %}" class="btn btn-danger btn-md my-0 p">
+              Remove from cart
+            </a>
+
+          </div>
+
+          
+        </div>
+        <!--Grid column-->
+
       </div>
+      <!--Grid row-->
 
       
-   
     </div>
-    
-    
-    
-    {% endblock %}
+  </main>
+<hr>
+<br>
+{% if rating %}
+    <center><b>Rating: {{rating}}</b></center>
+{% else %}
+
+  <form action="{% url 'page_view' product.id %}" method="POST">
+
+    {% csrf_token %}
+    <div class="container">
+        <div class="container">
+          {{ratingform | crispy  }}
+          <br>
+          <center><input type="submit" value="Rating" class="btn btn-dark"></center>
+        </div>
+    </div>
+<br>
+   
+</form>
+
+  {% endif %}
+
+<br>
+<br>
+
+
+
+{% endblock %}

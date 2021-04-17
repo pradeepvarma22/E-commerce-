@@ -1,12 +1,14 @@
 {% extends 'base.html' %}
 
 {% block body_block %}
-
+{% load static %}
 {% load cart_tag %}
 {% include "navbar.html" %}
 
 
-    <div class='col-sm-8 col-sm-offset-2'>
+<center>
+
+    <div class='col-sm-10 col-sm-offset-2' style="margin-top: 5rem!important;">
 
         <table class='table'>
         <thead>
@@ -15,7 +17,7 @@
             <th>Qty</th>
             <th>Price</th>
             <th>Add / Remove</th>
-            <th>delete Item</th>
+            <th>Delete</th>
         </thead>
         <tfoot>
             <tr>
@@ -36,8 +38,8 @@
 
                 <td>{{ value.price|multiply:value.quantity }}</td>
                 <td>
-                    <a href="{% url 'item_increment' value.product_id %}">+</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <a href="{% url 'item_decrement' value.product_id %}">-</a>
+                    <a href="{% url 'item_increment' value.product_id %}"><img src="{% static 'images/up.png'%}"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <a href="{% url 'item_decrement' value.product_id %}"><img src="{% static 'images/down.png'%}"></a>
                 </td>
                 <td>
                     <a href="{% url 'item_clear' value.product_id %}">del</a>
@@ -49,4 +51,5 @@
 
     </div>
 
+</center>
 {% endblock %}

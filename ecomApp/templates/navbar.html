@@ -22,7 +22,7 @@
 
 /* Add a color to the active/current link */
 .topnav a.active {
-  background-color: #4CAF50;
+  background-color: #252525;
   color: white;
 }
 
@@ -39,10 +39,11 @@
   <div class="topnav">
     <a class="active" href="{% url 'home' %}">Home</a>
 
-    <a href="">Ordered History</a>
+
     <a href="{% url 'recommend' %}">Recommed Products</a>
 
     <div class="topnav-right">
+      <a href="">{{user.get_username}}</a>
       <a href="{% url 'cart_detail' %}">Cart (   {{request.session.cart|length}} )      </a>
       <a class="nav-link" href="{% url 'logout' %}">Logout</a>
     </div>

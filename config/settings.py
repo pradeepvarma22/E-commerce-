@@ -39,7 +39,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 	'accounts',
     'ecomApp',
-    'cart'
+    'cart',
+    'crispy_forms'
+
 ]
 
 MIDDLEWARE = [
@@ -135,3 +137,4 @@ STATICFILES_DIRS = [
 AUTH_USER_MODEL = 'accounts.User'
 
 CART_SESSION_ID = 'cart'
+CRISPY_TEMPLATE_PACK = 'bootstrap4'

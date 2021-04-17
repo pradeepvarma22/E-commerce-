@@ -25,6 +25,7 @@ def Home(request, itemname='all'):
 
 
 def page_view(request,id):
+    ratingform = RatingForm
     rating_ = MyRating.objects.filter(product=Product.objects.get(id=id))
     sum=0
     cou = 0
@@ -49,8 +50,9 @@ def page_view(request,id):
             new_obj.user = user
             new_obj.product=Product.objects.get(id=id)
             new_obj.save()
+            return redirect('page_view',id)
 
-            
+
     obj = Product.objects.get(id=id)
     Flagg = False
     valuee=0
@@ -65,7 +67,6 @@ def page_view(request,id):
         Flagg = True
         valuee = check_already_reviewd.rating
 
-    ratingform = RatingForm
     context = {'product':obj,'ratingform':ratingform,'rateduser':Flagg,'rating':avg_rating}
     return render(request,'ecomApp/product_page_view.html',context)
 

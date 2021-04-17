@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load static %}
 
 {% block body_block %}
 
@@ -73,12 +73,14 @@ span.psw {
 </head>
 <body>
 
-<h2> customer Login Form</h2>
+<h2>Customer Login</h2>
+
+
 
 <form action="{% url 'clogin' %}" method="post">
  {% csrf_token %}
   <div class="imgcontainer">
-    <img src="img_avatar2.png" alt="Avatar" class="avatar">
+    <img src="{% static 'images/seller_user.png' %}" alt="Avatar" class="img-responsive" >
   </div>
 
   <div class="container">
@@ -94,11 +96,12 @@ span.psw {
     </label>
   </div>
 
-  <div class="container" style="background-color:#f1f1f1">
-    <button type="button" class="cancelbtn">Cancel</button>
-    <span class="psw">Forgot <a href="#">password?</a></span>
-  </div>
-</form>
+<center> <a href="{% url 'csignup'  %}">Create Account Here</a></center>
+{% for error in field.errors %}
+<p style="color: red">{{ error }}</p>
+{% endfor %}
+
+  </form>
 
 </body>
 </html>

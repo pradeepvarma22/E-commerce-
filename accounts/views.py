@@ -70,8 +70,8 @@ def Clogin(request):
             login(request, user)
             return redirect('home')
         else:
+            
             return redirect('clogin')
-
 
     return render(request,'accounts/customer/login.html')
 
@@ -114,6 +114,15 @@ def sellerV(request):
     context={'obj_t':obj,'sproducts':product_by_seller}
 
     return render(request,'accounts/seller/index.html',context)
+
+
+
+
+def delete_product(req,pkk):
+    obj = Product.objects.get(id=pkk)
+    obj.delete()
+    return redirect('sellerp')
+
 
 
 
