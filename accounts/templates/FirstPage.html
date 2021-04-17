@@ -23,7 +23,7 @@ body {font-family: Arial, Helvetica, sans-serif;}
 
 .navbar a {
   float: left;
-  padding: 40px;
+  padding: 15px;
   color: white;
   text-decoration: none;
   font-size: 17px;
@@ -59,10 +59,6 @@ button {
   border: none;
   cursor: pointer;
   width: 100%;
-}
-
-button:hover {
-  opacity: 0.8;
 }
 
 /* Extra styles for the cancel button */
@@ -127,9 +123,23 @@ span.psw {
   -webkit-animation: animatezoom 0.6s;
   animation: animatezoom 0.6s
 }
-.login1{
-  padding: 10px 24px; !important
+.login1 {
+  display: flex !important;
+}
 
+.login-btn {
+  background-color: grey;
+  border-radius: 5px;
+  width:160px;
+  margin: 0.2rem;
+  padding: 0.8rem;
+}
+
+.home-active {
+  background-color:#4CAF50;
+}
+.active {
+  background-color: cadetblue;
 }
 @-webkit-keyframes animatezoom {
   from {-webkit-transform: scale(0)} 
@@ -165,17 +175,16 @@ table, td{
 </style>
 <body>
 <div class="navbar">
-<img src="{% static 'images/leaf.png' %}" height="100px" width="100px" align="left" onclick="image(this)">
-  <a class="active" href="#"><i class="fa fa-fw fa-home"></i> Home</a> 
-  <a href="#"role="button" aria-pressed="true"><i class="fa fa-fw fa-search"></i> Search</a> 
-  <a href="#"role="button" aria-pressed="true"><i class="fa fa-fw fa-envelope"></i> Contact</a> 
+  <a class="home-active" href="#"><i class="fa fa-fw fa-home"></i> Home</a> 
+  <a href="{% url 'ssignup' %}"role="button" aria-pressed="true"> <i class="fa fa-fw fa-envelope"></i>Seller Signup</a> 
+  <a href="{% url 'csignup' %}"role="button" aria-pressed="true"><i class="fa fa-fw fa-envelope"></i> customer Signup</a> 
 <a button onclick="document.getElementById('id01').style.display='block'" style="width:auto;" aria-pressed="true"><i class="fa fa-fw fa-user "></i> Login</a></button></a>
 <div id="id01" class="modal">
   
-  <form class="modal-content animate" name = "shiva" method="post">
+  <form class="modal-content animate" name = "shiva" method="post" action="{% url 'clogin' %}">
  <div id="login1">
-  <a id="customer"  type="button" class="btn btn-primary" onclick="return clogin();">customer login</a>
-  <a id="seller"  type="button" class="btn btn-primary" onclick="return slogin();">seller login</a>
+  <button id="customer"  class="login-btn active" onclick="return clogin();">customer login</button>
+  <button id="seller"   class="login-btn" onclick="return slogin();">seller login</button>
   </div>
     <div class="imgcontainer">
       <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
@@ -189,7 +198,7 @@ table, td{
       <label for="psw"><b>Password</b></label>
       <input type="password" placeholder="Enter Password" name="password" required>
         
-      <button type="submit" onclick="return clogin();">Login</button>
+      <button id = "cool" type="submit" onclick="return clogin();">Login</button>
       <label>
         <input type="checkbox" checked="checked" name="remember"> Remember me
       </label>
@@ -214,20 +223,22 @@ window.onclick = function(event) {
 function clogin()
 {
      document.shiva.action="{% url 'clogin' %}";
+     document.getElementById('seller').style.backgroundColor = 'grey';
+     document.getElementById('customer').style.backgroundColor = 'cadetblue';
 }
 function slogin()
 {
      document.shiva.action="{% url 'slogin' %}";
+     document.getElementById('seller').style.backgroundColor = 'cadetblue';
+     document.getElementById('customer').style.backgroundColor = 'grey';
+     document.getElementById('cool').onclick="return slogin();";
+
 }
 </script>
 </div>
 </body>
 </html> 
 
-<a href="{% url 'clogin' %}">Customer Login</a>
-<a href="{% url 'slogin' %}">Seller lognin</a>
-<a href="{% url 'ssignup' %}" type="button" >Seller signup</a>
-<a href="{% url 'csignup' %}" type="button" >customer signup</a>
 
 <h1>Sellers List</h1>
     
