@@ -1,4 +1,4 @@
-# django ecommerce
+# Django ecommerce
 
     Recommendation System for E-Commerce using Collaborative Filtering
 
@@ -21,8 +21,8 @@ python manage.py runserver
 ```
 
 ## ToDo
-  - UI 
-  - Errors List Out
+  - <strike>UI</strike> 
+  - <strike>Errors List Out</strike> 
   
   
 ## Algorithm

@@ -96,6 +96,17 @@ span.psw {
   
 </form>
 
+{% if messages %}
+    {% for message in messages %}
+
+    <div class="alert alert-danger">
+          <strong>{{ message|escape }}</strong>
+        </div>
+    {% endfor %}
+{% endif %}
+
+
+
 </body>
 </html>
 

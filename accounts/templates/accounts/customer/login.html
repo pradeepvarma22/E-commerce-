@@ -97,11 +97,19 @@ span.psw {
   </div>
 
 <center> <a href="{% url 'csignup'  %}">Create Account Here</a></center>
-{% for error in field.errors %}
-<p style="color: red">{{ error }}</p>
-{% endfor %}
 
-  </form>
+
+ </form>
+  
+
+  {% if messages %}
+        {% for message in messages %}
+
+        <div class="alert alert-danger">
+              <strong>{{ message|escape }}</strong>
+            </div>
+        {% endfor %}
+  {% endif %}
 
 </body>
 </html>

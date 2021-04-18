@@ -7,6 +7,7 @@ from cart.cart import Cart
 from ecomApp.forms import OrderForm,RatingForm
 from django.db.models import Case, When
 import pandas as pd
+from django.core.exceptions import ObjectDoesNotExist
 
 
 
@@ -57,15 +58,16 @@ def page_view(request,id):
     Flagg = False
     valuee=0
     try:
-        check_already_reviewd=MyRating.objects.get(user =user)
-        check_already_reviewd_pro= MyRating.objects.get(product=obj)
-    except:
-        check_already_reviewd = 0
-        check_already_reviewd_pro=0
-        
-    if check_already_reviewd and check_already_reviewd_pro:
+        test_=MyRating.objects.get(user=user,product=obj)
+    except ObjectDoesNotExist:
+        test_ = None
+
+    
+    if test_ is not None:
         Flagg = True
-        valuee = check_already_reviewd.rating
+
+    if test_ is None:
+        Flagg = False
 
     context = {'product':obj,'ratingform':ratingform,'rateduser':Flagg,'rating':avg_rating}
     return render(request,'ecomApp/product_page_view.html',context)

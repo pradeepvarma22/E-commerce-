@@ -11,6 +11,7 @@ from accounts.forms import AddProduct
 from accounts.models import Seller
 from ecomApp.models import Product
 from django.urls import reverse_lazy
+from django.contrib import messages 
 
 
 
@@ -70,7 +71,7 @@ def Clogin(request):
             login(request, user)
             return redirect('home')
         else:
-            
+            messages.error(request, "UserName Or Password Incorrect")
             return redirect('clogin')
 
     return render(request,'accounts/customer/login.html')
@@ -90,6 +91,7 @@ def Slogin(request):
             login(request, user)
             return redirect('sellerp')
         else:
+            messages.error(request, "Username Or Password Incorrect")
             return redirect('slogin')
 
 
