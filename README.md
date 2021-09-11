@@ -26,16 +26,13 @@ python manage.py runserver
   
   
 ## Algorithm
-### Collabortive Filtering (Recommender Algorithm)
-	- Collaborative filtering filters information by using the interactions and data collected by the system from other users.
+### Collabortive Filtering (Recommender Algorithm) (User - Based)
 	- There are two types of collaborative filtering
-		  User-based, which measures the similarity between target users and other users.
-		  Item-based, which measures the similarity between the items that target users rate or interact with and other items.
-
-
-I have used user based collaborative filtering.	
-
-
+		  User-based
+		  Item-based
+		  
+## User-based:  measures the similarity between target users and other users.
+ 
 
 
 ## Team ✨
@@ -44,8 +41,7 @@ I have used user based collaborative filtering.
 | :---: |
 | [![Pradeep varma](https://github.com/varma7.png?size=100)](https://varma7.github.io)    
 | <a href="https://github.com/varma7" target="_blank">`github.com/varma7`</a>
-
-
+---
 | <a href="https://shivaram33.github.io" target="_blank">**Shivaram**</a>
 | :---: |
 | [![shivaram33](https://github.com/shivaram33.png?size=100)](https://shivaram33.github.io)    
