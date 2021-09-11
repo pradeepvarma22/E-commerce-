@@ -30,8 +30,7 @@ python manage.py runserver
 	- There are two types of collaborative filtering
 		  User-based
 		  Item-based
-		  
-## User-based:  measures the similarity between target users and other users.
+	   User-based:  measures the similarity between target users and other users.
  
 
 
