@@ -80,28 +80,30 @@
 
 <body>
 
+
   <h2>Seller Login</h2>
+
+  <div class="imgcontainer">
+    <img src="{% static 'images/seller_user.png' %}" alt="Avatar" class="img-responsive">
+  </div>
+  <div class="container">
+
+    <label for="uname"><b>Address</b></label>
+    <p id="address-print">disconnected</p>
+
+    <button onclick="connectWallet()">Connect to wallet</button>
+  </div>
   <form action="{% url 'slogin' %}" method="post">
     {% csrf_token %}
-    <div class="imgcontainer">
-      <img src="{% static 'images/seller_user.png' %}" alt="Avatar" class="img-responsive">
-    </div>
 
     <div class="container">
-      <label for="uname"><b>Username</b></label>
-      <input type="text" placeholder="Enter Username" name="username" required>
-
-      <label for="psw"><b>Password</b></label>
-      <input type="password" placeholder="Enter Password" name="password" required>
-
+      <input type="hidden" name="address" id="js_data_input">
       <button type="submit">Login</button>
-      <label>
-        <input type="checkbox" checked="checked" name="remember"> Remember me
-      </label>
+
     </div>
 
-  </form>
 
+  </form>
   {% if messages %}
   {% for message in messages %}
 
@@ -111,6 +113,28 @@
   {% endfor %}
   {% endif %}
 
+  <script>
+    var wallet;
+    const lamports_per_sol = solanaWeb3.LAMPORTS_PER_SOL;
+    function connectWallet() {
+
+      (async () => {
+        try {
+          const resp = await window.solana.connect();
+          wallet = resp;
+          walletaddress = window.solana.publicKey.toString();
+          console.log(walletaddress);
+          document.getElementById('address-print').innerText = walletaddress;
+
+          document.getElementById('js_data_input').value = walletaddress;
+
+        } catch (err) {
+          // { code: 4001, message: 'User rejected the request.' }
+        }
+      })();
+
+    }
+  </script>
 
 
 </body>

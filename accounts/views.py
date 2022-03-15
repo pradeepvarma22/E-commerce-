@@ -7,7 +7,7 @@ from accounts.models import Seller
 from ecomApp.models import Product
 from django.urls import reverse_lazy
 from django.contrib import messages 
-from accounts.models import Customer
+from accounts.models import Customer,Seller
 
 
 def HomeF(req):
@@ -42,27 +42,41 @@ def Clogin(request):
             return redirect('home')
     else:
         return render(request,'accounts/customer/login.html')
-       
+
 
 def Logout(req):
+    try:
+        del request.session['walletaddress']
+    except:
+        pass
     return redirect('homef')
 
 def Slogin(request):
     if request.POST:
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-
-        return redirect('sellerp')
-    else:
-        return redirect('slogin')
-
-
+        if request.session['walletaddress']:
+            del request.session['walletaddress']
+        walletaddr = request.POST.get('address')
+        tempobj=None
+        request.session['walletaddress'] = walletaddr
+        try:
+            tempobj = Seller.objects.get(walletaddress=walletaddr)
+        except:
+            print('no user')
+        if tempobj:
+            return redirect('sellerp')
+        else:
+            seller=Seller()
+            seller.walletaddress =walletaddr 
+            seller.save()
+            print(walletaddr)
+            return redirect('sellerp')
+    
     return render(request,'accounts/seller/login.html')
 
 def sellerV(request):
     obj =AddProduct
     mainuser = request.user
-    suser = Seller.objects.get(user=mainuser)
+    suser = Seller.objects.get(walletaddress=request.session['walletaddress'])
     if request.POST:
         inss = Product(user=suser)
         form = AddProduct(request.POST,request.FILES,instance=inss)
