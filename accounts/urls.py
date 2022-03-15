@@ -1,5 +1,5 @@
 from django.urls import path,include
-from accounts.views import CustomerSignUpView,SellerSignUpView,sellerV,Clogin,Slogin,Logout,HomeF,delete_product
+from accounts.views import sellerV,Clogin,Slogin,Logout,HomeF,delete_product
 from django.conf.urls.static import static
 from django.conf import settings
 
@@ -10,8 +10,6 @@ urlpatterns = [
     path('logout/',Logout,name='logout'),
     path('clogin/',Clogin,name='clogin'),
     path('slogin/',Slogin,name='slogin'),
-    path('csignup/',CustomerSignUpView.as_view(),name='csignup'),
-    path('ssignup/',SellerSignUpView.as_view(),name='ssignup'),
     path('sellerpage/',sellerV,name='sellerp'),
     path('delete_product/<str:pkk>/',delete_product,name='delete_product')
 ]

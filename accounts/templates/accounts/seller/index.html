@@ -4,56 +4,56 @@
 {% block body_block %}
 {% include 'navbars.html' %}
 <div class="container">
-<div class="container">
-<div class="container">
-<div class="container">
-    <br>
-    <br>
-    <h1>Add Product </h1>
+    <div class="container">
+        <div class="container">
+            <div class="container">
+                <br>
+                <br>
+                <h1>Add Product </h1>
 
-    <form action="{% url 'sellerp' %}" method="POST" enctype="multipart/form-data">
+                <form action="{% url 'sellerp' %}" method="POST" enctype="multipart/form-data">
 
-        {% csrf_token %}
+                    {% csrf_token %}
 
-        {{obj_t | crispy  }}
-		<br>
-        <center><input type="submit" value="Add Product" class="btn btn-dark"></center>
-    </form>
-    <br>
-    <br>
-</div>
-</div>
-</div>
+                    {{obj_t | crispy }}
+                    <br>
+                    <center><input type="submit" value="Add Product" class="btn btn-dark"></center>
+                </form>
+                <br>
+                <br>
+            </div>
+        </div>
+    </div>
 </div>
 <br>
 <br>
 <br>
-    <h3>Products by u: </h3>
+<h3>Products by u: </h3>
 
-    <div class="row mt-3">
+<div class="row mt-3">
     {% for i in sproducts %}
     <div class="col-4 mt-3">
 
         <div class="card" style="width: 18rem;">
             <img class="card-img-top" src="/images/{{i.image}}" alt="Cool">
             <div class="card-body">
-              <h5 class="card-title">{{i.name}}</h5>
-              <p class="card-text"><b>Rs:  {{i.price}}</b></p>
-              <p class="card-text"><b>{{i.description}}</b></p>
+                <h5 class="card-title">{{i.name}}</h5>
+                <p class="card-text"><b>Rs: {{i.price}}</b></p>
+                <p class="card-text"><b>{{i.description}}</b></p>
             </div>
             <a href="{% url 'delete_product' i.id %}" class="btn btn-warning">Delete</a>
-          </div>
-          <br>
+        </div>
+        <br>
 
     </div>
     {% endfor %}
-    </div>
+</div>
 </div>
 
 
 
 
-    </div>
+</div>
 
 
 

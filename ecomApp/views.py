@@ -1,8 +1,6 @@
 from django.shortcuts import render, redirect
 from django.shortcuts import HttpResponse
 from .models import *
-from accounts.decorators import customer_required,seller_required
-from django.contrib.auth.decorators import login_required
 from cart.cart import Cart
 from ecomApp.forms import OrderForm,RatingForm
 from django.db.models import Case, When
@@ -11,8 +9,6 @@ from django.core.exceptions import ObjectDoesNotExist
 
 
 
-@login_required
-@customer_required
 def Home(request, itemname='all'):
     if itemname == 'all':
         products = Product.objects.all()
@@ -73,32 +69,24 @@ def page_view(request,id):
     return render(request,'ecomApp/product_page_view.html',context)
 
 
-@login_required
-@customer_required
 def cart_add(request, id):
     cart = Cart(request)
     product = Product.objects.get(id=id)
     cart.add(product=product)
     return redirect("home")
 
-@login_required
-@customer_required
 def item_clear(request, id):
     cart = Cart(request)
     product = Product.objects.get(id=id)
     cart.remove(product)
     return redirect("cart_detail")
 
-@login_required
-@customer_required
 def item_increment(request, id):
     cart = Cart(request)
     product = Product.objects.get(id=id)
     cart.add(product=product)
     return redirect("cart_detail")
 
-@login_required
-@customer_required
 def item_decrement(request, id):
     cart = Cart(request)
     for pro in cart.session['cart'].values():
@@ -111,15 +99,11 @@ def item_decrement(request, id):
     return redirect("cart_detail")
 
 
-@login_required
-@customer_required
 def cart_clear(request):
     cart = Cart(request)
     cart.clear()
     return redirect("cart_detail")
 
-@login_required
-@customer_required
 def cart_detail(request):
     cart = Cart(request)
     dic = list(cart.session['cart'].values())
@@ -135,8 +119,8 @@ def order(request):
     total_price = sum([each['quantity'] * (float(each['price'])) for each in dic])
 
     if request.method == 'POST':
-        mainuser = request.user
-        customeruu = Customer.objects.get(user=mainuser)
+        mainuser = request.session['walletaddress']
+        customeruu = Customer.objects.get(walletaddress=mainuser)
         user = customeruu
         new_order = Checkout(user=user)
         form = OrderForm(request.POST, instance=new_order)
