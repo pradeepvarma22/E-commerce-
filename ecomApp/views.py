@@ -4,7 +4,6 @@ from .models import *
 from cart.cart import Cart
 from ecomApp.forms import OrderForm,RatingForm
 from django.db.models import Case, When
-import pandas as pd
 from django.core.exceptions import ObjectDoesNotExist
 
 
@@ -73,7 +72,8 @@ def cart_add(request, id):
     cart = Cart(request)
     product = Product.objects.get(id=id)
     cart.add(product=product)
-    return redirect("home")
+    addr = request.session['walletaddress']
+    return redirect("homes",addr)
 
 def item_clear(request, id):
     cart = Cart(request)
@@ -132,7 +132,8 @@ def order(request):
                 OrderItem.objects.create(order=order,name=prod['name'],price=str(prod['price']),quantity=prod['quantity'])
 
             cart.clear()
-            return redirect('home')
+            addr = request.session['walletaddress']
+            return redirect('homes',addr)
 
     form = OrderForm()
     context = {'form':form,

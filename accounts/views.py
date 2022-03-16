@@ -9,6 +9,18 @@ from django.urls import reverse_lazy
 from django.contrib import messages 
 from accounts.models import Customer,Seller
 
+def HomeSeller(req,addr):
+
+    user_o = Seller.objects.get(walletaddress=addr)
+    products = Product.objects.filter(user=user_o)
+    context = {
+        'products': products,
+        'addr':addr
+    }
+
+
+    return render(req,'sellerpagep.html',context)
+
 
 def HomeF(req):
     obj = Seller.objects.all()
@@ -63,20 +75,20 @@ def Slogin(request):
         except:
             print('no user')
         if tempobj:
-            return redirect('sellerp')
+            return redirect('sellerp',walletaddr)
         else:
             seller=Seller()
             seller.walletaddress =walletaddr 
             seller.save()
             print(walletaddr)
-            return redirect('sellerp')
+            return redirect('sellerp',walletaddr)
     
     return render(request,'accounts/seller/login.html')
 
-def sellerV(request):
+def sellerV(request,addr):
     obj =AddProduct
-    mainuser = request.user
-    suser = Seller.objects.get(walletaddress=request.session['walletaddress'])
+    walletid = request.session['walletaddress']
+    suser = Seller.objects.get(walletaddress=walletid)
     if request.POST:
         inss = Product(user=suser)
         form = AddProduct(request.POST,request.FILES,instance=inss)
@@ -87,7 +99,7 @@ def sellerV(request):
             print('nooooooooooooooo')
 
     product_by_seller = Product.objects.filter(user=suser)
-    context={'obj_t':obj,'sproducts':product_by_seller}
+    context={'obj_t':obj,'sproducts':product_by_seller,'walletid':walletid}
 
     return render(request,'accounts/seller/index.html',context)
 
